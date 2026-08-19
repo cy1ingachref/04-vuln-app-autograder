@@ -1,40 +1,65 @@
 # 04 — Vulnerable-by-Design OWASP Training App + Autograder
 
-**Hireability:** Proves AppSec teaching ability AND test automation — two skills
-senior security engineers value. It also shows you understand the OWASP Top 10
-at the code level, not just the theory.
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)  
+[![CI](https://img.shields.io/badge/CI-GitHub%20Actions-blue)](#)  
 
-**The story:** Modeled on the E-Tafakna legal-tech SaaS context (document
-handling). Each endpoint demonstrates one OWASP class, and an automated grader
-*proves* each vuln is exploitable — turning "I think this is vulnerable" into
-"the test fails when the bug is fixed." That's the mindset that makes security
-findings trustworthy.
+## Overview
 
-## What it demonstrates (vulnerable on purpose)
-| Endpoint | OWASP class |
-|----------|-------------|
-| `GET /login?user=admin&pw=admin` | A07 Broken Authentication (plaintext compare) |
-| `GET /user?id=<script>` | A03 Injection / XSS (reflected) |
-| `POST /calc {"expr":"..."}` | A03 Injection (RCE via eval) |
-| `GET /doc?id=secret` | A01 Path Traversal / Broken Access Control |
+A deliberately vulnerable training application that demonstrates common OWASP Top 10 issues and includes an autograder that programmatically verifies each vulnerability. Designed for hands-on learning and automated assessments without external dependencies.
 
-## Why stdlib only?
-`vuln_app.py` uses `http.server` (no Flask/FastAPI install). The autograder
-starts it in-process and fires real HTTP requests. Zero install friction — runs
-anywhere Python 3.7+ exists. (A FastAPI version is documented in GUIDE if you
-prefer a modern stack for your CV.)
+This README was upgraded to a full professional template automatically. See CHANGELOG below for details.
 
-## Run
+---
+
+## Quick links
+- Repository: https://github.com/cy1ingachref/04-vuln-app-autograder
+- Training app: `app/vuln_app.py`
+- Autograder: `tests/autograder.py`
+
+## What it demonstrates
+- OWASP classes implemented intentionally for education:
+  - A07 Broken Authentication (simple password check)
+  - A03 Injection / XSS (reflected)
+  - A03 Injection (RCE via eval in calculator)
+  - A01 Path Traversal / Broken Access Control
+
+## Requirements
+- Python 3.7+
+
+## Run the app and autograder
+Start the training app:
+
+```bash
+python app/vuln_app.py 8080
 ```
-python app/vuln_app.py 8080        # start the training app
-python tests/autograder.py          # prove each vuln is exploitable
+
+Run the autograder to validate vulnerabilities:
+
+```bash
+python tests/autograder.py
 ```
-Autograder exit 0 = every vuln confirmed + secure-contract tests pass.
 
-## Files
-- `app/vuln_app.py` — the vulnerable app (stdlib http.server)
-- `app/docs/secret.txt` — secret used by the path-traversal demo
-- `tests/autograder.py` — proves vulns + documents the secure contract
-- `GUIDE.md` — step-by-step code walkthrough + the "how to fix it" section
+Autograder exit code 0 = all vulnerabilities confirmed. Non-zero indicates a failing test.
 
-See `GUIDE.md` for the full code-by-code explanation and remediation snippets.
+## Development & Testing
+Run unit tests:
+
+```bash
+python -m unittest discover -v
+```
+
+## Contributing
+1. Fork the repository and create a branch from `main`.
+2. Run tests locally and ensure all pass.
+3. Open a PR with a clear description of the change.
+
+See CONTRIBUTING.md for details (auto-generated placeholder).
+
+## License
+MIT License — see LICENSE file.
+
+## Maintainer
+- Achref Ferjani — https://github.com/cy1ingachref
+
+## CHANGELOG
+- 2026-08-19: README upgraded to full professional template by automated process.
